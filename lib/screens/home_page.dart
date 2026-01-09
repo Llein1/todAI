@@ -204,15 +204,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      floatingActionButton: Hero(
-        tag: 'home_fab',
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.pushNamed(context, '/add-task');
-          },
-          icon: const Icon(Icons.add),
-          label: const Text('Add Task'),
-        ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add-task');
+        },
+        icon: const Icon(Icons.add),
+        label: const Text('Add Task'),
       ),
     );
   }

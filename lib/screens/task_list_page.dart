@@ -156,14 +156,11 @@ class _TaskListPageState extends State<TaskListPage> {
           ),
         ],
       ),
-      floatingActionButton: Hero(
-        tag: 'task_list_fab',
-        child: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/add-task');
-          },
-          child: const Icon(Icons.add),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add-task');
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
