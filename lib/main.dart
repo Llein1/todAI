@@ -7,6 +7,9 @@ import 'providers/todo_provider.dart';
 import 'providers/streak_provider.dart';
 import 'services/database_helper.dart';
 import 'services/notification_service.dart';
+import 'screens/home_page.dart';
+import 'screens/task_list_page.dart';
+import 'screens/add_edit_task_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,49 +43,59 @@ class TodAIApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
       
       // Material 3 Light Theme
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primaryLight,
-          brightness: Brightness.light,
-        ),
-        cardTheme: const CardThemeData(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: AppColors.primaryLight,
           ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          filled: true,
-        ),
-      ),
       
-      // Material 3 Dark Theme
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primaryDark,
-          brightness: Brightness.dark,
-        ),
-        cardTheme: const CardThemeData(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
+          // Card Theme
+          cardTheme: const CardThemeData(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+            ),
           ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          filled: true,
-        ),
-      ),
       
-      themeMode: ThemeMode.system,
-      home: const HomePage(),
+          // Input Decoration Theme
+          inputDecorationTheme: const InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+            filled: true,
+          ),
+        ),
+      
+        // Dark Theme
+        darkTheme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: AppColors.primaryDark,
+            brightness: Brightness.dark,
+          ),
+      
+          cardTheme: const CardThemeData(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+            ),
+          ),
+      
+          inputDecorationTheme: const InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+            filled: true,
+          ),
+        ),
+        themeMode: ThemeMode.system,
+        
+        // Home and Routes
+        home: const HomePage(),
+        routes: {
+          '/tasks': (context) => const TaskListPage(),
+          '/add-task': (context) => const AddEditTaskPage(),
+        },
       ),
     );
   }

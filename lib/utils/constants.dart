@@ -71,3 +71,48 @@ class AIConstants {
       'Extract date and time from this text. Return in format "YYYY-MM-DD HH:MM" or "none": ';
 }
 
+/// UI Constants for consistent spacing and sizing
+class UIConstants {
+  // Padding
+  static const double paddingSmall = 8.0;
+  static const double paddingMedium = 16.0;
+  static const double paddingLarge = 24.0;
+
+  // Border Radius
+  static const double radiusSmall = 8.0;
+  static const double radiusMedium = 16.0;
+  static const double radiusLarge = 24.0;
+
+  // Card Elevation
+  static const double elevationLow = 2.0;
+  static const double elevationMedium = 4.0;
+  static const double elevationHigh = 8.0;
+
+  // Icon Sizes
+  static const double iconSmall = 18.0;
+  static const double iconMedium = 24.0;
+  static const double iconLarge = 32.0;
+}
+
+/// Gradient Definitions
+class GradientColors {
+  static const streakGradient = LinearGradient(
+    colors: [Color(0xFFFF6B6B), Color(0xFFFFE66D)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const dashboardGradient = LinearGradient(
+    colors: [Color(0xFF6750A4), Color(0xFF7C4DFF)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+
+  static const completedGradient = LinearGradient(
+    colors: [Color(0xFF4CAF50), Color(0xFF8BC34A)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+}
+
+
