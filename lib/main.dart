@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 import 'utils/constants.dart';
+import 'providers/ai_provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Load environment variables
+  await dotenv.load(fileName: '.env');
+  
   runApp(const TodAIApp());
 }
 
@@ -10,9 +18,13 @@ class TodAIApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: AppConstants.appName,
-      debugShowCheckedModeBanner: false,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AIProvider()),
+      ],
+      child: MaterialApp(
+        title: AppConstants.appName,
+        debugShowCheckedModeBanner: false,
       
       // Material 3 Light Theme
       theme: ThemeData(
@@ -21,10 +33,10 @@ class TodAIApp extends StatelessWidget {
           seedColor: AppColors.primaryLight,
           brightness: Brightness.light,
         ),
-        cardTheme: CardTheme(
+        cardTheme: const CardThemeData(
           elevation: 2,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
@@ -42,10 +54,10 @@ class TodAIApp extends StatelessWidget {
           seedColor: AppColors.primaryDark,
           brightness: Brightness.dark,
         ),
-        cardTheme: CardTheme(
+        cardTheme: const CardThemeData(
           elevation: 2,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
@@ -58,6 +70,7 @@ class TodAIApp extends StatelessWidget {
       
       themeMode: ThemeMode.system,
       home: const HomePage(),
+      ),
     );
   }
 }

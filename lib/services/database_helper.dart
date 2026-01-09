@@ -1,5 +1,6 @@
 /// Database Helper for SQLite Operations
 /// Manages local database for tasks and streaks
+library;
 
 class DatabaseHelper {
   // TODO: Will be implemented in Phase 2
