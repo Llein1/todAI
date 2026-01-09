@@ -126,9 +126,23 @@ class StreakModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is StreakModel && other.id == id;
+    
+    return other is StreakModel &&
+        other.id == id &&
+        other.currentStreak == currentStreak &&
+        other.longestStreak == longestStreak &&
+        other.lastActiveDate.millisecondsSinceEpoch == lastActiveDate.millisecondsSinceEpoch &&
+        other.totalTasksCompleted == totalTasksCompleted &&
+        other.streakStartDate?.millisecondsSinceEpoch == streakStartDate?.millisecondsSinceEpoch;
   }
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode {
+    return id.hashCode ^
+        currentStreak.hashCode ^
+        longestStreak.hashCode ^
+        lastActiveDate.hashCode ^
+        totalTasksCompleted.hashCode ^
+        streakStartDate.hashCode;
+  }
 }
