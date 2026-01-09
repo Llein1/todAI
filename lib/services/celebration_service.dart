@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/celebration_overlay.dart';
+import '../widgets/streak_celebration_overlay.dart';
 
 /// Celebration Service
 /// Manages celebration triggers throughout the app
@@ -21,30 +22,10 @@ class CelebrationService {
 
   /// Show streak milestone celebration
   Future<void> showStreakMilestone(BuildContext context, int streak) async {
-    String message;
-    IconData icon;
-
-    if (streak == 7) {
-      message = 'One Week Streak! 🔥';
-      icon = Icons.local_fire_department;
-    } else if (streak == 30) {
-      message = 'One Month Streak! 🏆';
-      icon = Icons.emoji_events;
-    } else if (streak == 100) {
-      message = '100 Day Streak! 👑';
-      icon = Icons.military_tech;
-    } else if (streak == 365) {
-      message = 'One Year Streak! 🌟';
-      icon = Icons.stars;
-    } else {
-      message = '$streak Day Streak! 🔥';
-      icon = Icons.local_fire_department;
-    }
-
-    await CelebrationOverlay.show(
+    // Use full-screen flame animation
+    await StreakCelebrationOverlay.show(
       context,
-      message: message,
-      icon: icon,
+      streakDays: streak,
       duration: const Duration(seconds: 3),
     );
   }

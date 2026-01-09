@@ -41,6 +41,32 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
+          // DEBUG: Test streak increment & celebrations
+          IconButton(
+            icon: const Icon(Icons.science),
+            tooltip: 'Test Streak +1',
+            onPressed: () async {
+              final streakProvider = context.read<StreakProvider>();
+              final currentStreak = streakProvider.currentStreak;
+              final newStreak = currentStreak + 1;
+              
+              // Manually update streak in database
+              final updatedStreak = streakProvider.streak?.copyWith(
+                currentStreak: newStreak,
+                longestStreak: newStreak > (streakProvider.longestStreak) 
+                    ? newStreak 
+                    : streakProvider.longestStreak,
+                lastActiveDate: DateTime.now(),
+              );
+              
+              if (updatedStreak != null) {
+                await context.read<StreakProvider>().updateStreakManually(updatedStreak);
+              }
+              
+              // Show FULL SCREEN FLAME celebration
+              await CelebrationService().showStreakMilestone(context, newStreak);
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {

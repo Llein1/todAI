@@ -127,6 +127,18 @@ class StreakProvider with ChangeNotifier {
     }
   }
 
+  /// Manually update streak (for testing)
+  Future<void> updateStreakManually(StreakModel updatedStreak) async {
+    try {
+      await _dbHelper.updateStreak(updatedStreak);
+      _streak = updatedStreak;
+      notifyListeners();
+    } catch (e) {
+      _errorMessage = 'Failed to update streak manually: $e';
+      notifyListeners();
+    }
+  }
+
   /// Get streak message for UI
   String getStreakMessage() {
     if (_streak == null || currentStreak == 0) {
