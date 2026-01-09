@@ -6,6 +6,7 @@ import 'providers/ai_provider.dart';
 import 'providers/todo_provider.dart';
 import 'providers/streak_provider.dart';
 import 'services/database_helper.dart';
+import 'services/notification_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +16,10 @@ Future<void> main() async {
   
   // Initialize database
   await DatabaseHelper().initDatabase();
+  
+  // Initialize notifications
+  await NotificationService().initialize();
+  await NotificationService().requestPermissions();
   
   runApp(const TodAIApp());
 }

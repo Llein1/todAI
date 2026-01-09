@@ -1,11 +1,14 @@
 import 'package:flutter/foundation.dart';
 import '../models/streak_model.dart';
 import '../services/database_helper.dart';
+import '../services/notification_service.dart';
+import '../utils/notification_templates.dart';
 
 /// Streak Provider for Gamification State Management
 /// Manages user activity streaks and daily check-ins
 class StreakProvider with ChangeNotifier {
   final DatabaseHelper _dbHelper = DatabaseHelper();
+  final NotificationService _notificationService = NotificationService();
 
   // State variables
   StreakModel? _streak;
@@ -20,6 +23,15 @@ class StreakProvider with ChangeNotifier {
   int get longestStreak => _streak?.longestStreak ?? 0;
   int get totalTasksCompleted => _streak?.totalTasksCompleted ?? 0;
   bool get isActiveToday => _streak?.isActiveToday ?? false;
+
+  /// Initialize and check streak (called on app startup)
+  Future<void> initializeAndCheckStreak() async {
+    await loadStreak();
+    await checkAndUpdateStreak();
+    
+    // Schedule daily reminder at 20:00
+    await _notificationService.scheduleDailyStreakReminder();
+  }
 
   /// Load streak from database
   Future<void> loadStreak() async {
@@ -50,7 +62,16 @@ class StreakProvider with ChangeNotifier {
 
       if (updatedStreak != _streak) {
         await _dbHelper.updateStreak(updatedStreak);
+        
+        final oldStreak = _streak!.currentStreak;
         _streak = updatedStreak;
+        
+        // Show achievement notification for milestones
+        final newStreak = updatedStreak.currentStreak;
+        if (newStreak > oldStreak && (newStreak == 7 || newStreak == 30 || newStreak == 100)) {
+          await _notificationService.showStreakAchievement(newStreak);
+        }
+        
         notifyListeners();
       }
     } catch (e) {
@@ -75,6 +96,17 @@ class StreakProvider with ChangeNotifier {
     } catch (e) {
       _errorMessage = 'Failed to process task completion: $e';
       notifyListeners();
+    }
+  }
+
+  /// Send daily streak reminder if not active
+  Future<void> sendStreakReminderIfNeeded() async {
+    if (!isActiveToday && currentStreak > 0) {
+      await _notificationService.showNotification(
+        NotificationService.streakReminderId,
+        NotificationTemplates.streakReminderTitle,
+        NotificationTemplates.streakReminderBody(currentStreak),
+      );
     }
   }
 

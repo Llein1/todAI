@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import '../models/todo_model.dart';
 import '../services/database_helper.dart';
+import '../services/notification_service.dart';
 
 /// Todo Provider for State Management
 /// Manages todo list state and database operations
 class TodoProvider with ChangeNotifier {
   final DatabaseHelper _dbHelper = DatabaseHelper();
+  final NotificationService _notificationService = NotificationService();
 
   // State variables
   List<TodoModel> _todos = [];
@@ -50,6 +52,12 @@ class TodoProvider with ChangeNotifier {
     try {
       await _dbHelper.insertTodo(todo);
       _todos.insert(0, todo);
+      
+      // Schedule notification if deadline exists
+      if (todo.deadline != null && !todo.isDone) {
+        await _notificationService.scheduleTaskReminder(todo);
+      }
+      
       _applyFilters();
       notifyListeners();
       return true;
@@ -67,6 +75,13 @@ class TodoProvider with ChangeNotifier {
       final index = _todos.indexWhere((t) => t.id == todo.id);
       if (index != -1) {
         _todos[index] = todo;
+        
+        // Cancel old notification and reschedule if needed
+        await _notificationService.cancelNotification(todo.id.hashCode);
+        if (todo.deadline != null && !todo.isDone) {
+          await _notificationService.scheduleTaskReminder(todo);
+        }
+        
         _applyFilters();
         notifyListeners();
       }
@@ -81,6 +96,9 @@ class TodoProvider with ChangeNotifier {
   /// Delete a todo
   Future<bool> deleteTodo(String id) async {
     try {
+      // Cancel notification
+      await _notificationService.cancelNotification(id.hashCode);
+      
       await _dbHelper.deleteTodo(id);
       _todos.removeWhere((t) => t.id == id);
       _applyFilters();
@@ -106,8 +124,9 @@ class TodoProvider with ChangeNotifier {
       await _dbHelper.updateTodo(updatedTodo);
       _todos[index] = updatedTodo;
 
-      // Update streak if task completed
+      // Cancel notification if task completed
       if (updatedTodo.isDone) {
+        await _notificationService.cancelNotification(id.hashCode);
         await _dbHelper.incrementTaskCount();
       }
 
