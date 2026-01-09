@@ -317,7 +317,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
               child: CircularProgressIndicator(),
             )
           : Hero(
-              tag: 'add_task_fab',
+              tag: 'add_edit_fab',
               child: FloatingActionButton.extended(
                 onPressed: _saveTask,
                 icon: const Icon(Icons.save),

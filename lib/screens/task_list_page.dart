@@ -157,7 +157,7 @@ class _TaskListPageState extends State<TaskListPage> {
         ],
       ),
       floatingActionButton: Hero(
-        tag: 'add_task_fab',
+        tag: 'task_list_fab',
         child: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, '/add-task');

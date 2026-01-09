@@ -205,7 +205,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: Hero(
-        tag: 'add_task_fab',
+        tag: 'home_fab',
         child: FloatingActionButton.extended(
           onPressed: () {
             Navigator.pushNamed(context, '/add-task');
