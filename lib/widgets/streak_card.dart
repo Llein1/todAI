@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/constants.dart';
+import 'animated_counter.dart';
 
 /// Streak Card Widget
 /// Displays current streak with fire theme and motivational message
@@ -45,8 +46,10 @@ class StreakCard extends StatelessWidget {
                 const SizedBox(width: UIConstants.paddingMedium),
                 Column(
                   children: [
-                    Text(
-                      '$currentStreak',
+                    AnimatedCounter(
+                      value: currentStreak,
+                      duration: const Duration(milliseconds: 600),
+                      curve: Curves.easeOutBack,
                       style: theme.textTheme.displayLarge?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

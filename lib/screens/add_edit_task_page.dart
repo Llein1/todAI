@@ -316,10 +316,13 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
               padding: EdgeInsets.all(16.0),
               child: CircularProgressIndicator(),
             )
-          : FloatingActionButton.extended(
-              onPressed: _saveTask,
-              icon: const Icon(Icons.save),
-              label: Text(isEdit ? 'Update' : 'Create'),
+          : Hero(
+              tag: 'add_task_fab',
+              child: FloatingActionButton.extended(
+                onPressed: _saveTask,
+                icon: const Icon(Icons.save),
+                label: Text(isEdit ? 'Update' : 'Create'),
+              ),
             ),
     );
   }

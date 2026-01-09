@@ -4,6 +4,7 @@ import '../providers/todo_provider.dart';
 import '../providers/streak_provider.dart';
 import '../widgets/task_card.dart';
 import '../utils/constants.dart';
+import '../services/celebration_service.dart';
 
 /// Task List Page
 /// Displays all tasks with filters and search
@@ -140,6 +141,9 @@ class _TaskListPageState extends State<TaskListPage> {
                                   context
                                       .read<StreakProvider>()
                                       .onTaskCompleted();
+                                  
+                                  // Show celebration
+                                  await CelebrationService().showTaskComplete(context);
                                 }
                               },
                               onDelete: () {
@@ -152,11 +156,14 @@ class _TaskListPageState extends State<TaskListPage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/add-task');
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: Hero(
+        tag: 'add_task_fab',
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/add-task');
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }

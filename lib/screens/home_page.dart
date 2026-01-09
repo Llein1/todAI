@@ -6,6 +6,7 @@ import '../widgets/streak_card.dart';
 import '../widgets/stats_row.dart';
 import '../widgets/task_card.dart';
 import '../utils/constants.dart';
+import '../services/celebration_service.dart';
 
 /// Home Page - Dashboard
 /// Displays streak, stats, and upcoming tasks
@@ -183,6 +184,11 @@ class _HomePageState extends State<HomePage> {
                             context
                                 .read<StreakProvider>()
                                 .onTaskCompleted();
+                            
+                            // Show celebration
+                            if (mounted) {
+                              await CelebrationService().showTaskComplete(context);
+                            }
                           }
                         },
                         onDelete: () {

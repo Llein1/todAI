@@ -51,6 +51,7 @@ dependencies:
 
   # Animations
   lottie: ^3.2.1
+  confetti: ^0.7.0
 
   # HTTP Requests for AI API
   http: ^1.2.2
