@@ -61,6 +61,9 @@ dependencies:
   # Environment Variables for API Keys
   flutter_dotenv: ^5.2.1
 
+  # UUID Generation
+  uuid: ^4.5.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

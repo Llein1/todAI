@@ -3,12 +3,18 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'utils/constants.dart';
 import 'providers/ai_provider.dart';
+import 'providers/todo_provider.dart';
+import 'providers/streak_provider.dart';
+import 'services/database_helper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   // Load environment variables
   await dotenv.load(fileName: '.env');
+  
+  // Initialize database
+  await DatabaseHelper().initDatabase();
   
   runApp(const TodAIApp());
 }
@@ -21,6 +27,8 @@ class TodAIApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AIProvider()),
+        ChangeNotifierProvider(create: (_) => TodoProvider()),
+        ChangeNotifierProvider(create: (_) => StreakProvider()),
       ],
       child: MaterialApp(
         title: AppConstants.appName,
