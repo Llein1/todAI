@@ -15,7 +15,8 @@ class StreakModel {
     DateTime? lastActiveDate,
     this.totalTasksCompleted = 0,
     this.streakStartDate,
-  }) : lastActiveDate = lastActiveDate ?? DateTime.now();
+  }) : lastActiveDate = lastActiveDate ?? 
+       DateTime.now().subtract(const Duration(days: 2)); // 2 days ago so first task starts streak
 
   /// Convert model to Map for SQLite
   Map<String, dynamic> toMap() {
