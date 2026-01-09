@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import '../utils/constants.dart';
 
 /// Streak Card Widget
@@ -34,13 +35,18 @@ class StreakCard extends StatelessWidget {
         padding: const EdgeInsets.all(UIConstants.paddingLarge),
         child: Column(
           children: [
-            // Fire Emoji & Streak Number
+            // Fire Animation & Streak Number
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  '🔥',
-                  style: TextStyle(fontSize: 40),
+                SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: Lottie.network(
+                    AnimationConstants.streakFire,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Text('🔥', style: TextStyle(fontSize: 40)),
+                  ),
                 ),
                 const SizedBox(width: UIConstants.paddingMedium),
                 Column(
@@ -62,9 +68,14 @@ class StreakCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(width: UIConstants.paddingMedium),
-                const Text(
-                  '🔥',
-                  style: TextStyle(fontSize: 40),
+                SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: Lottie.network(
+                    AnimationConstants.streakFire,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Text('🔥', style: TextStyle(fontSize: 40)),
+                  ),
                 ),
               ],
             ),

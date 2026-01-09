@@ -115,4 +115,13 @@ class GradientColors {
   );
 }
 
+/// Animation Asset URLs
+class AnimationConstants {
+  // Using public Lottie URLs for now
+  static const String streakFire = 'https://assets10.lottiefiles.com/packages/lf20_9xRk0r.json';
+  static const String confetti = 'https://assets10.lottiefiles.com/packages/lf20_u4y9eBB.json';
+  static const String emptyState = 'https://assets2.lottiefiles.com/packages/lf20_w98qte06.json';
+  static const String success = 'https://assets9.lottiefiles.com/packages/lf20_5tl1xxnz.json';
+}
+
 

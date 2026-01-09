@@ -4,6 +4,8 @@ import '../providers/todo_provider.dart';
 import '../providers/streak_provider.dart';
 import '../widgets/task_card.dart';
 import '../utils/constants.dart';
+import '../services/celebration_service.dart';
+import 'package:lottie/lottie.dart';
 
 /// Task List Page
 /// Displays all tasks with filters and search
@@ -135,11 +137,29 @@ class _TaskListPageState extends State<TaskListPage> {
                                 // TODO: Navigate to task detail
                               },
                               onToggle: (value) async {
+                                final oldStreak =
+                                    context.read<StreakProvider>().currentStreak;
+
                                 await todoProvider.toggleTodoStatus(task.id);
+
                                 if (value && context.mounted) {
-                                  context
+                                  await context
                                       .read<StreakProvider>()
                                       .onTaskCompleted();
+
+                                  if (context.mounted) {
+                                    final newStreak = context
+                                        .read<StreakProvider>()
+                                        .currentStreak;
+
+                                    if (newStreak > oldStreak) {
+                                      CelebrationService.showStreakCelebration(
+                                          context, newStreak);
+                                    } else {
+                                      CelebrationService.showTaskCompletionEffect(
+                                          context);
+                                    }
+                                  }
                                 }
                               },
                               onDelete: () {
@@ -196,10 +216,17 @@ class _EmptyState extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.task_alt,
-              size: 80,
-              color: theme.primaryColor.withOpacity(0.5),
+            SizedBox(
+              width: 200,
+              height: 200,
+              child: Lottie.network(
+                AnimationConstants.emptyState,
+                errorBuilder: (context, error, stackTrace) => Icon(
+                  Icons.task_alt,
+                  size: 80,
+                  color: theme.primaryColor.withOpacity(0.5),
+                ),
+              ),
             ),
             const SizedBox(height: UIConstants.paddingLarge),
             Text(
